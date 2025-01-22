@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { MdLogin } from "react-icons/md"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
+import Image from "./Image"
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
@@ -8,7 +9,7 @@ const NavBar = () => {
     <div className="w-full h-16 md:h-20 flex items-center justify-between">
       {/* logo */}
       <div className="flex items-center gap-4 text-2xl font-bold">
-        <img className="h-10 w-10" src="/logo.png" alt="Logo" />
+        <Image src="logo.png" alt="logo" w={42} h={42} />
         <span>Daily-Blog</span>
       </div>
       {/* mobile menu */}

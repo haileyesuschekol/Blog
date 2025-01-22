@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { CiMenuFries } from "react-icons/ci"
-import { RxCross1 } from "react-icons/rx"
+import { MdLogin } from "react-icons/md"
+import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
@@ -18,19 +18,39 @@ const NavBar = () => {
           className="cursor-pointer text-3xl text-gray-900 "
           onClick={() => setOpen((prev) => !prev)}
         >
-          {open ? <RxCross1 /> : <CiMenuFries />}
+          {open ? <RxCross1 /> : <RxHamburgerMenu />}
         </div>
         {/* mobile links */}
         <div
-          className={`w-full h-screen flex flex-col items-center justify-center absolute top-16 bg-[#ceceff] transition-all ease-in-out ${
+          className={`w-full h-screen flex flex-col items-center gap-8  text-lg font-medium justify-center absolute top-16 bg-[#ceceff] transition-all ease-in-out ${
             open ? "-right-0" : "-right-[100%]"
           }`}
         >
-          Menu links
+          <a href="/">Home</a>
+          <a href="/">Trending</a>
+          <a href="/">Most Popular</a>
+          <a href="/">About</a>
+          <a href="">
+            <button className="py-2 px-4 rounded-3xl bg-green-500 text-white flex items-center gap-3">
+              <MdLogin className="font-bold text-2xl" />
+              Login
+            </button>
+          </a>
         </div>
       </div>
       {/* desktop menu */}
-      <div className="hidden md:flex">D</div>
+      <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
+        <a href="/">Home</a>
+        <a href="/">Trending</a>
+        <a href="/">Most Popular</a>
+        <a href="/">About</a>
+        <a href="">
+          <button className="py-2 px-4 rounded-3xl bg-green-500 text-white flex items-center gap-3">
+            <MdLogin className="font-bold text-2xl" />
+            Login
+          </button>
+        </a>
+      </div>
     </div>
   )
 }

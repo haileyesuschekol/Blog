@@ -13,11 +13,20 @@ const NavBar = () => {
       </div>
       {/* mobile menu */}
       <div className="md:hidden">
+        {/* mobile button */}
         <div
-          className="cursor-pointer text-3xl text-gray-900"
+          className="cursor-pointer text-3xl text-gray-900 "
           onClick={() => setOpen((prev) => !prev)}
         >
-          {open ? <CiMenuFries /> : <RxCross1 />}
+          {open ? <RxCross1 /> : <CiMenuFries />}
+        </div>
+        {/* mobile links */}
+        <div
+          className={`w-full h-screen flex flex-col items-center justify-center absolute top-16 bg-[#ceceff] transition-all ease-in-out ${
+            open ? "-right-0" : "-right-[100%]"
+          }`}
+        >
+          Menu links
         </div>
       </div>
       {/* desktop menu */}

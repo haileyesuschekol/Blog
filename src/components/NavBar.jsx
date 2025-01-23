@@ -1,6 +1,12 @@
 import { useState } from "react"
 import { MdLogin } from "react-icons/md"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react"
 import Image from "./Image"
 import { Link } from "react-router-dom"
 
@@ -46,12 +52,20 @@ const NavBar = () => {
         <Link to="/">Trending</Link>
         <Link to="/">Most Popular</Link>
         <Link to="/">About</Link>
-        <Link to="">
-          <button className="py-2 px-4 rounded-3xl bg-green-500 text-white flex items-center gap-3">
-            <MdLogin className="font-bold text-2xl" />
-            Login
-          </button>
-        </Link>
+
+        <header>
+          <SignedOut>
+            <Link to="/login">
+              <button className="py-2 px-4 rounded-3xl bg-green-500 text-white flex items-center gap-3">
+                <MdLogin className="font-bold text-2xl" />
+                Login
+              </button>
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </header>
       </div>
     </div>
   )

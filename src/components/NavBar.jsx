@@ -1,12 +1,7 @@
 import { useState } from "react"
 import { MdLogin } from "react-icons/md"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react"
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
 import Image from "./Image"
 import { Link } from "react-router-dom"
 

@@ -24,7 +24,7 @@ const PostListItem = () => {
           <Link className="text-green-500">Web Design</Link>
           <span>2 days ago</span>
         </div>
-        <p>
+        <p className="text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus,
           repudiandae? Excepturi ab magni laborum! Dignissimos voluptatem autem
           esse culpa maxime corrupti dolor, distinctio magnam optio.

@@ -12,3 +12,9 @@ body {
 .aniatedButton {
   animation-duration: 10000ms;
 }
+
+.ql-editor {
+  min-height: 200px; /* Minimum height */
+  height: 100%; /* Flexible height */
+  overflow-y: auto; /* Enable scrolling */
+}

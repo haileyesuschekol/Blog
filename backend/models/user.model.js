@@ -1,4 +1,4 @@
-import mongoose, { model } from "mongoose"
+import mongoose from "mongoose"
 import { Schema } from "mongoose"
 
 const userSchema = new Schema(

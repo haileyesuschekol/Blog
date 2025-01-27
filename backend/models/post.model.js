@@ -32,6 +32,16 @@ const postSchema = new Schema(
       type: string,
       required: true,
     },
+
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+
+    visit: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 )

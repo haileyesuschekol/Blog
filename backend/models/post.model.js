@@ -29,7 +29,7 @@ const postSchema = new Schema(
     },
 
     content: {
-      type: string,
+      type: String,
       required: true,
     },
 

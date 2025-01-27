@@ -11,6 +11,17 @@ app.use("/api/users", userRouter)
 app.use("/api/posts", postRouter)
 app.use("/api/comments", commentRouter)
 
+//errror handler
+app.use((error, req, res, next) => {
+  res.status(error.status || 500)
+
+  res.json({
+    message: error.message || "Something went wrong!",
+    status: error.status,
+    stack: error.stack,
+  })
+})
+
 const port = process.env.PORT || 3000
 app.listen(port, () => {
   connectToDb()

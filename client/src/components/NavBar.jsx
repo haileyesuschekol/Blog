@@ -51,7 +51,7 @@ const NavBar = () => {
         <header>
           <SignedOut>
             <Link to="/login">
-              <button className="py-2 px-4 rounded-3xl bg-green-500 text-white flex items-center gap-3">
+              <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">
                 <MdLogin className="font-bold text-2xl" />
                 Login
               </button>

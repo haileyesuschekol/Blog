@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react"
 import { CiImageOn } from "react-icons/ci"
+import { TbFaceIdError } from "react-icons/tb"
 import ReactQuill from "react-quill-new"
 import "react-quill-new/dist/quill.snow.css"
 
@@ -12,7 +13,12 @@ const WritePage = () => {
   }
 
   if (isLoaded && !isSignedIn) {
-    return <div className="">You should login!</div>
+    return (
+      <div className="text-red-500 bg-red-200 w-96 border-2 rounded-lg p-4 border-red-700 my-5 text-xl flex flex-row gap-4 m-auto items-center justify-center">
+        <TbFaceIdError />
+        Please Login or Create an account for free!
+      </div>
+    )
   }
 
   return (

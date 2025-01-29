@@ -37,6 +37,7 @@ export const signup = async (req, res) => {
     generateJwtAndParseToCookie(res, user._id)
 
     //send verification code via email
+    await sendVerificationEmail(user.email, verificationCode)
 
     //response except password
     res.status(201).json({

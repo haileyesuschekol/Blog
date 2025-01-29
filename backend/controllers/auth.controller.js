@@ -83,8 +83,60 @@ export const verifyEmail = async (req, res) => {
   }
 }
 
-export const login = (req, res) => {}
+//login
+export const login = async (req, res) => {
+  const { email, password } = req.body
+  try {
+    //check if user missed user and password
+    if (!email || !password) {
+      throw new Error("Please provide email and password")
+    }
+
+    //find user form DB
+    const user = await User.findOne({ email })
+
+    //check if user exist in the DB
+    if (!user) {
+      throw new Error("Invalid credintial")
+    }
+
+    //check if the password is valid
+    const verifyPassword = await bcrypt.compare(password, user.password)
+    if (!verifyPassword) {
+      throw new Error("Invalid credintials")
+    }
+
+    //generate jwt and sign to cookie
+    generateJwtAndParseToCookie(res, user._id)
+
+    //update last login
+    user.lastLogin = new Date()
+
+    //save user data to DB
+    await user.save()
+
+    //response if success
+    res.status(200).json({
+      success: true,
+      message: "Logged in successfully",
+      user: {
+        ...user._doc,
+        password: undefined,
+      },
+    })
+  } catch (error) {
+    //response if failed
+    res.status(400).json({ success: false, message: error.message })
+  }
+}
+
+//logout
+export const logout = async (req, res) => {
+  res.clearCookie("token")
+  res.status(200).json({ success: true, message: "Logged out successfully!" })
+}
+
 export const forgotPassword = (req, res) => {}
 export const resetPassword = (req, res) => {}
-export const logout = (req, res) => {}
+
 export const checkAuth = (req, res) => {}

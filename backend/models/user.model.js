@@ -1,27 +1,39 @@
 import mongoose from "mongoose"
-import { Schema } from "mongoose"
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
-    userName: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-
     email: {
       type: String,
       required: true,
       unique: true,
     },
-
-    img: {
+    name: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    lastLogin: {
+      type: Date,
+      default: Date.now,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: {
       type: String,
     },
-
-    savedPosts: {
-      type: [String],
-      default: [],
+    resetPasswordExpiresAt: {
+      type: Date,
+    },
+    verificationToken: {
+      type: String,
+    },
+    verificationTokenExpiresAt: {
+      type: Date,
     },
   },
   { timestamps: true }

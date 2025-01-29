@@ -1,3 +1,4 @@
+import crypto from "crypto"
 import bcrypt from "bcryptjs"
 import User from "../models/user.model"
 
@@ -136,7 +137,39 @@ export const logout = async (req, res) => {
   res.status(200).json({ success: true, message: "Logged out successfully!" })
 }
 
-export const forgotPassword = (req, res) => {}
+//forgot password
+const forgotPassword = async (req, res) => {
+  const { email } = req.body
+
+  try {
+    const user = await User.findOne({ email })
+
+    //find if user exists
+    if (!user) {
+      throw new Error("User not found, invalid email address")
+    }
+
+    //generate token
+    const resetToken = crypto.randomBytes(20).toString("hex")
+    const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000 //1hr
+
+    //save password reset data to DB
+    user.resetPasswordToken = resetToken
+    user.resetPasswordExpiresAt = resetTokenExpiresAt
+
+    await user.save()
+
+    //send response if success
+    res.status(200).json({
+      success: true,
+      message: "Password reset link sent to your email",
+    })
+  } catch (error) {
+    //send response if failed
+    res.status(404).json({ success: false, message: error.message })
+  }
+}
+
 export const resetPassword = (req, res) => {}
 
 export const checkAuth = (req, res) => {}

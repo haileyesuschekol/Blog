@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { HiLogin } from "react-icons/hi"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
 import Image from "./Image"
 import { Link } from "react-router-dom"
 
@@ -49,17 +48,12 @@ const NavBar = () => {
         <Link to="/">About</Link>
 
         <header>
-          <SignedOut>
-            <Link to="/login">
-              <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">
-                <HiLogin className="font-bold text-2xl" />
-                Login
-              </button>
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <Link to="/login">
+            <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">
+              <HiLogin className="font-bold text-2xl" />
+              Login
+            </button>
+          </Link>
         </header>
       </div>
     </div>

@@ -58,7 +58,9 @@ const SignupPage = () => {
             whileHover={{ Scale: 1.02 }}
             whileTap={{ scale: 0.9 }}
             type="submit"
-          ></motion.button>
+          >
+            Sign Up
+          </motion.button>
         </form>
       </div>
       <div className="px-8 py-4 bg-slate-100 flex justify-center">

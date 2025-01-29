@@ -14,8 +14,8 @@ const WritePage = () => {
 
   if (isLoaded && !isSignedIn) {
     return (
-      <div className="text-red-500 bg-red-200 w-96 border-2 rounded-lg p-4 border-red-700 my-5 text-xl flex flex-row gap-4 m-auto items-center justify-center">
-        <TbFaceIdError />
+      <div className="text-green-700 bg-green-200 w-96 border-2 rounded-lg p-4 border-green-700 my-5 text-xl flex flex-row gap-4 m-auto items-center justify-center">
+        <TbFaceIdError className="font-bold text-5xl" />
         Please Login or Create an account for free!
       </div>
     )

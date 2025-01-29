@@ -1,26 +1,8 @@
-import { useUser } from "@clerk/clerk-react"
 import { CiImageOn } from "react-icons/ci"
-import { TbFaceIdError } from "react-icons/tb"
 import ReactQuill from "react-quill-new"
 import "react-quill-new/dist/quill.snow.css"
 
 const WritePage = () => {
-  // check auth from clerk
-  const { isLoaded, isSignedIn } = useUser()
-
-  if (!isLoaded) {
-    return <div className="">Loading ...</div>
-  }
-
-  if (isLoaded && !isSignedIn) {
-    return (
-      <div className="text-green-700 bg-green-200 w-96 border-2 rounded-lg p-4 border-green-700 my-5 text-xl flex flex-row gap-4 m-auto items-center justify-center">
-        <TbFaceIdError className="font-bold text-5xl" />
-        Please Login or Create an account for free!
-      </div>
-    )
-  }
-
   return (
     <div className=" h-[clac(100vh-64px)] md:[calc(100vh-80px)] flex flex-col gap-3">
       <h1 className="text-xl font-light">Create new Post</h1>

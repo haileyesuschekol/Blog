@@ -17,9 +17,9 @@ const Login = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="border-green-700 border-t-4 max-w-md w-full  rounded-zxl shadow-xl overflow-hidden "
+      className=" max-w-md w-full mt-4 mx-auto rounded-zxl shadow-xl overflow-hidden "
     >
-      <div className="p-8">
+      <div className="p-5">
         <h2 className="text-3xl font-bold mb-6 text-center text-green-600">
           Sign in
         </h2>
@@ -61,7 +61,7 @@ const Login = () => {
           </motion.button>
         </form>
       </div>
-      <div className="px-8 py-4 bg-slate-100 flex justify-center">
+      <div className="px-8 py-4 bg-lime-200 bg-opacity-50 flex justify-center">
         <p className="text-base text-gray-900">Don&apos;t have an account?</p>
         <Link
           to={"/signup"}

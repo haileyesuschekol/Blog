@@ -9,10 +9,11 @@ import {
   resetPassword,
   checkAuth,
 } from "../controllers/auth.controller.js"
+import { isUserAuth } from "../middleware/auth.js"
 
 const router = express.Router()
 
-router.get("/check-auth", checkAuth)
+router.get("/check-auth", isUserAuth, checkAuth)
 router.post("/signup", signup)
 router.post("/login", login)
 router.post("/logout", logout)

@@ -216,3 +216,22 @@ const resetPassword = async (req, res) => {
     res.status(404).json({ success: false, message: error.message })
   }
 }
+
+//check auth
+const checkAuth = async (req, res) => {
+  try {
+    //find user in the given id
+    const user = await User.findById(req.userId).select("-password")
+
+    // check if the user exist
+    if (!user) {
+      throw new Error("User not found")
+    }
+
+    //response if success
+    res.status(200).json({ success: true, user })
+  } catch (error) {
+    //response if failed
+    res.status(400).json({ success: false, message: error.message })
+  }
+}

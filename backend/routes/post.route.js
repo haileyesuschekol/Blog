@@ -5,12 +5,13 @@ import {
   getPost,
   getPosts,
 } from "../controllers/post.controller.js"
+import { isUserAuth } from "../middleware/auth.js"
 
 const router = express.Router()
 
 router.get("/", getPosts)
 router.get("/:slug", getPost)
-router.post("/", createPost)
-router.delete("/:id", deletePost)
+router.post("/", isUserAuth, createPost)
+router.delete("/:id", isUserAuth, deletePost)
 
 export default router

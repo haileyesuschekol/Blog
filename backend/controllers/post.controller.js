@@ -1,4 +1,5 @@
 import Post from "../models/post.model.js"
+import User from "../models/user.model.js"
 
 export const getPosts = async (req, res) => {
   const posts = await Post.find()
@@ -11,8 +12,17 @@ export const getPost = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-  const newPost = new Post(req.body)
-  const post = await Post.create(newPost)
+  //save userId form cookie
+  const userId = req.userId
+
+  const user = User.findOne({ userId })
+  if (!user) {
+    res.status(403).json({ success: false, message: "unauthenticated" })
+  }
+
+  //create post and parse to user id
+  const newPost = new Post({ user: userId, ...req.body })
+  const post = await newPost.save()
   res.status(200).json(post)
 }
 

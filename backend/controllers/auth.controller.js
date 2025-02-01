@@ -1,6 +1,6 @@
 import crypto from "crypto"
 import bcrypt from "bcryptjs"
-import User from "../models/user.model"
+import User from "../models/user.model.js"
 
 //sign up
 export const signup = async (req, res) => {
@@ -138,7 +138,7 @@ export const logout = async (req, res) => {
 }
 
 //forgot password
-const forgotPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
   const { email } = req.body
 
   try {
@@ -177,7 +177,7 @@ const forgotPassword = async (req, res) => {
 }
 
 //reset password
-const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
   const { token } = req.params
   const { password } = req.body
 
@@ -218,7 +218,7 @@ const resetPassword = async (req, res) => {
 }
 
 //check auth
-const checkAuth = async (req, res) => {
+export const checkAuth = async (req, res) => {
   try {
     //find user in the given id
     const user = await User.findById(req.userId).select("-password")

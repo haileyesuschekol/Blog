@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    savedPost: {
+      type: [String],
+      default: [],
+    },
     password: {
       type: String,
       required: true,

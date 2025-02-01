@@ -1,6 +1,10 @@
 import crypto from "crypto"
 import bcrypt from "bcryptjs"
 import User from "../models/user.model.js"
+import { generateVerificationCode } from "../utils/verificationCode.js"
+import { generateJwtAndParseToCookie } from "../utils/generateJwtAndParseToCookie.js"
+import { sendVerificationEmail } from "../mail/sendEmails.js"
+import { sendResetPassword } from "../mail/sendEmails.js"
 
 //sign up
 export const signup = async (req, res) => {
@@ -106,7 +110,6 @@ export const login = async (req, res) => {
     if (!verifyPassword) {
       throw new Error("Invalid credintials")
     }
-
     //generate jwt and sign to cookie
     generateJwtAndParseToCookie(res, user._id)
 
@@ -133,6 +136,7 @@ export const login = async (req, res) => {
 
 //logout
 export const logout = async (req, res) => {
+  console.log(req.userId, res.userId)
   res.clearCookie("token")
   res.status(200).json({ success: true, message: "Logged out successfully!" })
 }

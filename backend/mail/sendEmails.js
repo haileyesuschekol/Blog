@@ -1,5 +1,5 @@
 import {
-  VERIFICATION_EMAIL_TEMPLATE,
+  VERIFICATION_EMAIL_TEMPLET,
   PASSWORD_RESET_REQUEST_TEMPLET,
 } from "./emailTemplet.js"
 import { client, sender } from "./mailtrap.config.js"
@@ -13,7 +13,7 @@ export const sendVerificationEmail = async (email, verificationCode) => {
         from: sender,
         to: recipient,
         subject: "Verifiy your email",
-        html: VERIFICATION_EMAIL_TEMPLATE.replace(
+        html: VERIFICATION_EMAIL_TEMPLET.replace(
           "{verificationCode}",
           verificationCode
         ),
@@ -37,7 +37,7 @@ export const sendResetPassword = async (email, resetUrl) => {
         from: sender,
         to: recipient,
         subject: "Reset your password",
-        html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetUrl),
+        html: PASSWORD_RESET_REQUEST_TEMPLET.replace("{resetURL}", resetUrl),
         category: "password reset success",
       })
     } else {

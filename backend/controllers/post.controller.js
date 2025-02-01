@@ -27,6 +27,21 @@ export const createPost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
-  const post = await Post.findByIdAndDelete(req.params.id)
-  res.status(200).json("Delete successfully")
+  //save userId form cookie
+  const userId = req.userId
+
+  const user = User.findOne({ userId })
+  if (!user) {
+    res.status(403).json({ success: false, message: "unauthenticated" })
+  }
+
+  const deletePost = await Post.findByIdAndDelete({
+    _id: req.params.id,
+    user: userId,
+  })
+
+  if (!deletePost) {
+    res.status(403).json("You can delete only your post!")
+  }
+  res.status(200).json("Psot delete successfully")
 }

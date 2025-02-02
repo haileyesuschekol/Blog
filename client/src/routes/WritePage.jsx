@@ -4,12 +4,19 @@ import { CiImageOn } from "react-icons/ci"
 import ReactQuill from "react-quill-new"
 import "react-quill-new/dist/quill.snow.css"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 const WritePage = () => {
   const [value, setValue] = useState("")
+  const navigate = useNavigate()
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
       return axios.post(`${import.meta.env.VITE_API_URL}/api/posts`, newPost)
+    },
+    onSuccess: (res) => {
+      toast.success("post has been created")
+      navigate(`/${res.data.slug}`)
     },
   })
 

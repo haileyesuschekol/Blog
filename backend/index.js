@@ -1,6 +1,6 @@
 import express from "express"
 import cookieParser from "cookie-parser"
-
+import cors from "cors"
 import connectToDb from "./lib/connectDb.js"
 import userRouter from "./routes/user.route.js"
 import postRouter from "./routes/post.route.js"
@@ -8,6 +8,7 @@ import commentRouter from "./routes/comment.route.js"
 import authRouter from "./routes/auth.route.js"
 
 const app = express()
+app.use(cors(process.env.CLIENT_URL))
 app.use(express.json())
 
 app.use(cookieParser())

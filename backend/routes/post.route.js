@@ -11,7 +11,7 @@ const router = express.Router()
 
 router.get("/", getPosts)
 router.get("/:slug", getPost)
-router.post("/", isUserAuth, createPost)
+router.post("/", createPost)
 router.delete("/:id", isUserAuth, deletePost)
 
 export default router

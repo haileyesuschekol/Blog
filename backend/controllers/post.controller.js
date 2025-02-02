@@ -19,9 +19,19 @@ export const createPost = async (req, res) => {
   if (!user) {
     res.status(403).json({ success: false, message: "unauthenticated" })
   }
+  //create a slug
+  let slug = req.body.title.replace(/ /g, "-").toLowerCase()
+  let existingSlug = await Post.findOne({ slug })
+  let counter = 2
+
+  while (existingSlug) {
+    slug = `${slug}-${counter}`
+    existingSlug = await Post.findOne({ slug })
+    counter++
+  }
 
   //create post and parse to user id
-  const newPost = new Post({ user: userId, ...req.body })
+  const newPost = new Post({ user: userId, slug, ...req.body })
   const post = await newPost.save()
   res.status(200).json(post)
 }

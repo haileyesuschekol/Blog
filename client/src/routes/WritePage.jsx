@@ -75,6 +75,7 @@ const WritePage = () => {
         >
           {mutation.isPending ? "Loading ..." : "Post"}
         </button>
+        <span> {mutation.isError ? `${mutation.error.message}` : null}</span>
       </form>
     </div>
   )

@@ -69,8 +69,11 @@ const WritePage = () => {
           value={value}
           onChange={setValue}
         />
-        <button className="bg-green-500 text-white font-medium rounded-md mt-2 p-2 w-36">
-          Post
+        <button
+          disabled={mutation.isPending}
+          className="bg-green-500 text-white font-medium rounded-md mt-2 p-2 w-36"
+        >
+          {mutation.isPending ? "Loading ..." : "Post"}
         </button>
       </form>
     </div>

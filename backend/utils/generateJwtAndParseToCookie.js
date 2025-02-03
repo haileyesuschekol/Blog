@@ -6,9 +6,9 @@ export const generateJwtAndParseToCookie = (res, userId) => {
   })
 
   res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    httpOnly: true, // Prevent JavaScript access
+    secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+    sameSite: "none", // Required for cross-origin cookies
     maxAge: 7 * 12 * 60 * 1000, //7days
   })
 

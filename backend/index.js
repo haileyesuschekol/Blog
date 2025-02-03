@@ -8,7 +8,12 @@ import commentRouter from "./routes/comment.route.js"
 import authRouter from "./routes/auth.route.js"
 
 const app = express()
-app.use(cors(process.env.CLIENT_URL))
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL, // frontend domain
+    credentials: true, // Allow cookies
+  })
+)
 app.use(express.json())
 
 app.use(cookieParser())

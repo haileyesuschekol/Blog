@@ -14,6 +14,7 @@ import SinglePostPage from "./routes/SinglePostPage.jsx"
 import MainLayout from "./layouts/MainLayout.jsx"
 import SignupPage from "./routes/SignUpPage.jsx"
 import ForgotPasswordPage from "./routes/ForgotPasswordPage.jsx"
+import EmailVerificationPage from "./routes/EmailVerificationPage.jsx"
 
 const queryClient = new QueryClient()
 
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
         path: "/forgot-password",
         element: <ForgotPasswordPage />,
       },
+
+      {
+        path: "/verify-email",
+        element: <EmailVerificationPage />,
+      },
     ],
   },
 ])
@@ -63,7 +69,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="top-right" />
     </QueryClientProvider>
   </StrictMode>
 )

@@ -42,11 +42,11 @@ export const signup = async (req, res) => {
     generateJwtAndParseToCookie(res, user._id)
 
     //send verification code via email
-    await sendVerificationEmail(user.email, verificationCode)
+    // await sendVerificationEmail(user.email, verificationCode)
 
     //response except password
     res.status(201).json({
-      message: "User created successfully!",
+      message: "User created! Please verify your email",
       status: "success",
       user: {
         ...user._doc,
@@ -63,7 +63,10 @@ export const verifyEmail = async (req, res) => {
   const { code } = req.body
   try {
     if (!code) {
-      throw new Error("Please send your verification code")
+      return res.status(400).json({
+        success: false,
+        message: "Please Enter your verification code",
+      })
     }
     const user = await User.findOne({
       verificationToken: code,
@@ -71,7 +74,10 @@ export const verifyEmail = async (req, res) => {
     })
 
     if (!user) {
-      throw new Error("Invalid or expired verification code!")
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired verification code!",
+      })
     }
 
     user.verificationToken = undefined
@@ -80,11 +86,14 @@ export const verifyEmail = async (req, res) => {
 
     await user.save()
 
-    res
+    return res
       .status(200)
-      .json({ success: true, message: "email verified successfully" })
+      .json({ success: true, message: "Email verified successfully" })
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message })
+    return res.status(400).json({
+      success: false,
+      message: "Something went wrong! Please try later",
+    })
   }
 }
 

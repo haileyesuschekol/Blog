@@ -1,17 +1,61 @@
 import { motion } from "framer-motion"
+import { toast } from "react-toastify"
+import axios from "axios"
 import { Lock, Mail, User } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Input from "../components/Input"
 import PasswordStrength from "../components/PasswordStrength"
+import { useMutation } from "@tanstack/react-query"
 
 const SignupPage = () => {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
 
+  const navigate = useNavigate()
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
+        userData,
+        { withCredentials: true } // Include credentials (cookies)
+      )
+    },
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+
+    onSuccess: (response) => {
+      const message = response.data?.message || "Operation successful"
+      toast.success(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+      navigate("/verify-email")
+    },
+  })
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const data = {
+      name,
+      email,
+      password,
+    }
+    mutation.mutate(data)
   }
 
   return (
@@ -51,6 +95,7 @@ const SignupPage = () => {
 
           {/* password strength Checker */}
           <PasswordStrength password={password} />
+
           <motion.button
             className="mt-5 w-full py-3 px-4 bg-green-500 text-white
           font-bold rounded-lg shadow-lg hover:bg-green-600 focus:outline-none
@@ -58,8 +103,9 @@ const SignupPage = () => {
             whileHover={{ Scale: 1.02 }}
             whileTap={{ scale: 0.9 }}
             type="submit"
+            disabled={mutation.isPending}
           >
-            Sign Up
+            {mutation.isPending ? "Signing up" : "Sign up"}
           </motion.button>
         </form>
       </div>

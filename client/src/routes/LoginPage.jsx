@@ -1,15 +1,58 @@
 import { motion } from "framer-motion"
-import Input from "../components/Input"
+import { toast } from "react-toastify"
+import axios from "axios"
 import { Lock, Mail } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
+import Input from "../components/Input"
 
 const Login = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
 
+  const navigate = useNavigate()
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        userData,
+        { withCredentials: true } // Include credentials (cookies)
+      )
+    },
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+
+    onSuccess: (response) => {
+      const message = response.data?.message || "Operation successful"
+      toast.success(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+      navigate("/")
+    },
+  })
+
   const handleLogin = async (e) => {
     e.preventDefault()
+    const data = {
+      email,
+      password,
+    }
+    mutation.mutate(data)
   }
 
   return (

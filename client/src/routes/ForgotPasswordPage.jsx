@@ -1,15 +1,57 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
-import Input from "../components/Input"
+import { toast } from "react-toastify"
+import axios from "axios"
 import { ArrowLeft, Mail } from "lucide-react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
+import Input from "../components/Input"
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("")
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  // const navigate = useNavigate()
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/forgot-password`,
+        userData,
+        { withCredentials: true } // Include credentials (cookies)
+      )
+    },
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+
+    onSuccess: (response) => {
+      const message = response.data?.message || "Operation successful"
+      setIsSubmitted(true)
+      toast.success(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+  })
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const data = {
+      email,
+    }
+    mutation.mutate(data)
   }
 
   return (

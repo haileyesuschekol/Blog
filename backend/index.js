@@ -8,15 +8,16 @@ import commentRouter from "./routes/comment.route.js"
 import authRouter from "./routes/auth.route.js"
 
 const app = express()
+app.use(cookieParser())
 app.use(
   cors({
     origin: process.env.CLIENT_URL, // frontend domain
     credentials: true, // Allow cookies
   })
 )
-app.use(express.json())
 
-app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true })) // For parsing application/x-www-form-urlencoded
 
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)

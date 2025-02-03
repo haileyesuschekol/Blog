@@ -15,6 +15,14 @@ export const createPost = async (req, res) => {
   //save userId form cookie
   const userId = req.userId
 
+  const content = req.body
+
+  if (content.title === "" && content.desc === "" && content.content === "") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please fill the form" })
+  }
+
   const user = User.findOne({ userId })
   if (!user) {
     res.status(403).json({ success: false, message: "unauthenticated" })
@@ -31,9 +39,9 @@ export const createPost = async (req, res) => {
   }
 
   //create post and parse to user id
-  const newPost = new Post({ user: userId, slug, ...req.body })
+  const newPost = new Post({ user: userId, slug, ...content })
   const post = await newPost.save()
-  res.status(200).json(post)
+  res.status(200).json({ post, message: "Created!" })
 }
 
 export const deletePost = async (req, res) => {

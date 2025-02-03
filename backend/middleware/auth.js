@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 export const isUserAuth = (req, res, next) => {
   //get cookies
   const token = req.cookies.token
-
+  console.log("Cookies:", req.cookies)
   try {
     //check if there is cookie
     if (!token) {

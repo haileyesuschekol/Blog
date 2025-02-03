@@ -12,11 +12,34 @@ const WritePage = () => {
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      return axios.post(`${import.meta.env.VITE_API_URL}/api/posts`, newPost)
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/api/posts`,
+        newPost,
+        { withCredentials: true } // Include credentials (cookies)
+      )
     },
-    onSuccess: (res) => {
-      toast.success("post has been created")
-      navigate(`/${res.data.slug}`)
+
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+    onSuccess: (response) => {
+      const message = response.data?.message || "Operation successful"
+      toast.success(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+      navigate(`/${response.data.slug}`)
     },
   })
 
@@ -29,7 +52,6 @@ const WritePage = () => {
       category: formData.get("category"),
       desc: formData.get("desc"),
       content: value,
-      user: "679e54cb3e31eb3cc5f78910",
     }
     mutation.mutate(data)
   }
@@ -82,7 +104,6 @@ const WritePage = () => {
         >
           {mutation.isPending ? "Loading ..." : "Post"}
         </button>
-        <span> {mutation.isError ? `${mutation.error.message}` : null}</span>
       </form>
     </div>
   )

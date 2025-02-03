@@ -1,11 +1,37 @@
 import { useState } from "react"
 import { HiLogin } from "react-icons/hi"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
-import Image from "./Image"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import Image from "./Image"
+import { useQuery } from "@tanstack/react-query"
+import UserProfileImg from "./UserProfileImg"
+// import UserProfileImg from "./UserProfileImg"
+
+const fetchPost = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/api/auth/check-auth`,
+    {
+      withCredentials: true,
+    }
+  )
+  return res.data
+}
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
+
+  const {
+    data: userData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchPost(),
+  })
+  console.log(userData?.user)
+  //
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between">
       {/* logo */}
@@ -47,14 +73,18 @@ const NavBar = () => {
         <Link to="/">Most Popular</Link>
         <Link to="/">About</Link>
 
-        <header>
-          <Link to="/login">
-            <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">
-              <HiLogin className="font-bold text-2xl" />
-              Login
-            </button>
-          </Link>
-        </header>
+        {userData?.user.isVerified ? (
+          <UserProfileImg />
+        ) : (
+          <header>
+            <Link to="/login">
+              <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">
+                <HiLogin className="font-bold text-2xl" />
+                Login
+              </button>
+            </Link>
+          </header>
+        )}
       </div>
     </div>
   )

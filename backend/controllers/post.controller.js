@@ -17,7 +17,7 @@ export const createPost = async (req, res) => {
 
   const content = req.body
 
-  if (content.title === "" && content.desc === "" && content.content === "") {
+  if (content.title === "" || content.desc === "" || content.content === "") {
     return res
       .status(400)
       .json({ success: false, message: "Please fill the form" })

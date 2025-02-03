@@ -39,7 +39,7 @@ const WritePage = () => {
         pauseOnHover: false,
         theme: "colored",
       })
-      navigate(`/${response.data.slug}`)
+      navigate(`/${response.data.post.slug}`)
     },
   })
 

@@ -15,6 +15,7 @@ import MainLayout from "./layouts/MainLayout.jsx"
 import SignupPage from "./routes/SignUpPage.jsx"
 import ForgotPasswordPage from "./routes/ForgotPasswordPage.jsx"
 import EmailVerificationPage from "./routes/EmailVerificationPage.jsx"
+import ResetPasswordPage from "./routes/ResetPasswordPage.jsx"
 
 const queryClient = new QueryClient()
 
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
       {
         path: "/verify-email",
         element: <EmailVerificationPage />,
+      },
+
+      {
+        path: "/reset-password/:token",
+        element: <ResetPasswordPage />,
       },
     ],
   },

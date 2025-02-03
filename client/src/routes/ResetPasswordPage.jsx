@@ -1,14 +1,65 @@
 import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 import { motion } from "framer-motion"
-import Input from "../components/Input"
 import { Lock } from "lucide-react"
+import { useMutation } from "@tanstack/react-query"
+import { useNavigate, useParams } from "react-router-dom"
+import Input from "../components/Input"
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
+
+  const { token } = useParams()
+  const navigate = useNavigate()
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/reset-password/${token}`,
+        userData,
+        { withCredentials: true } // Include credentials (cookies)
+      )
+    },
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+    },
+
+    onSuccess: (response) => {
+      const message = response.data?.message || "Operation successful"
+      toast.success(message, {
+        autoClose: 2000,
+        position: "top-right",
+        hideProgressBar: true,
+        pauseOnHover: false,
+        theme: "colored",
+      })
+      navigate("/login")
+    },
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      return
+    }
+    const data = {
+      password,
+      confirmPassword,
+    }
+    mutation.mutate(data)
   }
 
   return (
@@ -41,7 +92,7 @@ const ResetPasswordPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-
+          {error ? <h2 className="text-red-500 p-3">{error}</h2> : null}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

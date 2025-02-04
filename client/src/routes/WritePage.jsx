@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CiImageOn } from "react-icons/ci"
 import ReactQuill from "react-quill-new"
@@ -6,9 +6,31 @@ import "react-quill-new/dist/quill.snow.css"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import PleaseLogin from "../components/PleaseLogin"
+
+const fetchUser = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/api/auth/check-auth`,
+    {
+      withCredentials: true,
+    }
+  )
+  return res.data
+}
+
 const WritePage = () => {
   const [value, setValue] = useState("")
   const navigate = useNavigate()
+
+  const {
+    data: userData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchUser(),
+    // retry: false,
+  })
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
@@ -54,6 +76,10 @@ const WritePage = () => {
       content: value,
     }
     mutation.mutate(data)
+  }
+
+  if (!userData) {
+    return <PleaseLogin />
   }
 
   return (

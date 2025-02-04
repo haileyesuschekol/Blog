@@ -2,95 +2,35 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { HiLogin } from "react-icons/hi"
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx"
 import { Link } from "react-router-dom"
-import axios from "axios"
-import { toast } from "react-toastify"
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom"
 import Image from "./Image"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { CgProfile } from "react-icons/cg"
 import { IoSettingsOutline } from "react-icons/io5"
 import { MdLogout } from "react-icons/md"
-// import UserProfileImg from "./UserProfileImg"
-
-const fetchUser = async () => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/api/auth/check-auth`,
-    {
-      withCredentials: true,
-    }
-  )
-  return res.data
-}
+import useUser from "../hook/useFetchUser"
+import useLogoutUser from "../hook/useLogoutUser"
+import getRandomColor from "../utils/generateRandomColor"
 
 const NavBar = () => {
   const [open, setOpen] = useState(false)
-
-  const mutation = useMutation({
-    mutationFn: async (newData) => {
-      return axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
-        newData,
-        { withCredentials: true } // Include credentials (cookies)
-      )
-    },
-
-    onError: (error) => {
-      const message = error.response?.data?.message || "Something went wrong"
-
-      toast.error(message, {
-        autoClose: 2000,
-        position: "top-right",
-        hideProgressBar: true,
-        pauseOnHover: false,
-        theme: "colored",
-      })
-    },
-    onSuccess: (response) => {
-      queryClient.removeQueries(["user"])
-      queryClient.invalidateQueries(["user"]) // Refetch fresh data
-      const message = response.data?.message || "Operation successful"
-      toast.success(message, {
-        autoClose: 2000,
-        position: "top-right",
-        hideProgressBar: true,
-        pauseOnHover: false,
-        theme: "colored",
-      })
-      navigate(`/`)
-    },
-  })
-
-  const handleLogout = () => {
-    mutation.mutate()
-  }
-
-  const {
-    data: userData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => fetchUser(),
-    // retry: false,
-  })
-  console.log("user data", userData)
-  //
-
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF"
-    let color = "#"
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
-  }
-
   const dropdownRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const bgColor = useMemo(() => getRandomColor(), [])
-  const queryClient = useQueryClient()
 
+  //logout mutator
+  const logout = useLogoutUser()
+
+  //getuser
+  const { data: userData } = useUser()
+  console.log("user data", userData)
+
+  //logout handler
+  const handleLogout = () => {
+    logout.mutate()
+  }
+
+  //generate random color
+  getRandomColor()
+  const bgColor = useMemo(() => getRandomColor(), [])
   const newName = userData?.user?.name.slice(0, 1).toUpperCase()
 
   useEffect(() => {
@@ -105,8 +45,6 @@ const NavBar = () => {
     }
   }, [])
 
-  const navigate = useNavigate()
-  //
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between">
       {/* logo */}
@@ -189,8 +127,6 @@ const NavBar = () => {
             </motion.div>
           </div>
         ) : (
-          //
-
           <header>
             <Link to="/login">
               <button className="py-2 px-3 rounded-xl bg-green-500 text-white flex items-center gap-3">

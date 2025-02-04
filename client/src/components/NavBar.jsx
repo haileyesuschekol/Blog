@@ -21,7 +21,7 @@ const NavBar = () => {
 
   //getuser
   const { data: userData } = useUser()
-  console.log("user data", userData)
+  console.log("user data", userData?.user)
 
   //logout handler
   const handleLogout = () => {

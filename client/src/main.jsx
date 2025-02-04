@@ -17,6 +17,7 @@ import SignupPage from "./routes/SignUpPage.jsx"
 import ForgotPasswordPage from "./routes/ForgotPasswordPage.jsx"
 import EmailVerificationPage from "./routes/EmailVerificationPage.jsx"
 import ResetPasswordPage from "./routes/ResetPasswordPage.jsx"
+import RedirectAuthUserToHome from "./components/RedirectUserToHome.jsx"
 
 const queryClient = new QueryClient()
 
@@ -42,25 +43,45 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <RedirectAuthUserToHome>
+            <LoginPage />
+          </RedirectAuthUserToHome>
+        ),
       },
       {
         path: "/signup",
-        element: <SignupPage />,
+        element: (
+          <RedirectAuthUserToHome>
+            <SignupPage />
+          </RedirectAuthUserToHome>
+        ),
       },
       {
         path: "/forgot-password",
-        element: <ForgotPasswordPage />,
+        element: (
+          <RedirectAuthUserToHome>
+            <ForgotPasswordPage />
+          </RedirectAuthUserToHome>
+        ),
       },
 
       {
         path: "/verify-email",
-        element: <EmailVerificationPage />,
+        element: (
+          <RedirectAuthUserToHome>
+            <EmailVerificationPage />
+          </RedirectAuthUserToHome>
+        ),
       },
 
       {
         path: "/reset-password/:token",
-        element: <ResetPasswordPage />,
+        element: (
+          <RedirectAuthUserToHome>
+            <ResetPasswordPage />
+          </RedirectAuthUserToHome>
+        ),
       },
     ],
   },

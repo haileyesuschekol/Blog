@@ -151,7 +151,7 @@ const NavBar = () => {
         {userData ? (
           // <UserProfileImg name={userData?.user?.name} />
           <div
-            className="flex flex-col relative items-center justify-center h-screen z-10"
+            className="flex flex-col relative items-center justify-center"
             ref={dropdownRef}
           >
             <button
@@ -168,7 +168,7 @@ const NavBar = () => {
               className="overflow-hidden w-32 bg-white rounded-lg shadow-lg"
             >
               <div
-                className="p-6 mt-1 text-center absolute left-3 bg-white rounded-lg flex flex-col justify-center items-start gap-2"
+                className="p-6 mt-1 text-center absolute left-3 z-10 bg-white rounded-lg flex flex-col justify-center items-start gap-2"
                 // style={{ backgroundColor: bgColor }}
               >
                 <p className=" text-gray-800 flex flex-row gap-3 items-center">

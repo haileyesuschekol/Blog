@@ -139,7 +139,7 @@ export const login = async (req, res) => {
     })
   } catch (error) {
     //response if failed
-    res.status(400).json({ success: false, message: error.message })
+    return res.status(400).json({ success: false, message: error.message })
   }
 }
 

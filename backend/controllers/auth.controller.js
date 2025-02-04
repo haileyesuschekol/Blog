@@ -111,13 +111,13 @@ export const login = async (req, res) => {
 
     //check if user exist in the DB
     if (!user) {
-      throw new Error("Invalid credintial")
+      throw new Error("Invalid username or password")
     }
 
     //check if the password is valid
     const verifyPassword = await bcrypt.compare(password, user.password)
     if (!verifyPassword) {
-      throw new Error("Invalid credintials")
+      throw new Error("Invalid username or password")
     }
     //generate jwt and sign to cookie
     generateJwtAndParseToCookie(res, user._id)

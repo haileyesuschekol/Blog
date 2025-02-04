@@ -1,24 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import PostListItem from "./PostListItem"
-
-const fetchPost = async () => {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`, {
-    withCredentials: true,
-  })
-  return res.data
-}
+import usePosts from "../hook/usePosts"
 
 const PostList = () => {
-  const {
-    data: postData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => fetchPost(),
-  })
-
+  const { data: postData } = usePosts()
+  console.log(postData)
   return (
     <div className="flex flex-col gap-12 mb-8">
       <PostListItem />

@@ -7,14 +7,14 @@ export const isUserAuth = (req, res, next) => {
   try {
     //check if there is cookie
     if (!token) {
-      throw new Error("Unauthorized - no token provided")
+      throw new Error("Unauthenticated please login")
     }
     //decode jwt
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
     //check if token is valid
     if (!decoded) {
-      throw new Error("Unauthorized - invalid token")
+      throw new Error("Unauthorized error")
     }
 
     //sign req.User to token and pass to next route

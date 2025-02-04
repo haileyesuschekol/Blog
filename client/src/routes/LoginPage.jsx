@@ -4,12 +4,13 @@ import axios from "axios"
 import { Lock, Mail } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Input from "../components/Input"
 
 const Login = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const queryClient = useQueryClient()
 
   const navigate = useNavigate()
 
@@ -35,6 +36,7 @@ const Login = () => {
 
     onSuccess: (response) => {
       const message = response.data?.message || "Operation successful"
+      queryClient.invalidateQueries(["user"]) // Refetch user data
       toast.success(message, {
         autoClose: 2000,
         position: "top-right",

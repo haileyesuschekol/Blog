@@ -20,6 +20,7 @@ const fetchUser = async () => {
 
 const WritePage = () => {
   const [value, setValue] = useState("")
+  const [nullError, setNullError] = useState(false)
   const navigate = useNavigate()
 
   const {
@@ -74,6 +75,13 @@ const WritePage = () => {
       category: formData.get("category"),
       desc: formData.get("desc"),
       content: value,
+    }
+
+    if (!value || !data.title || !data.category || !data.desc) {
+      setNullError(true)
+      toast.error("Please enter your content!")
+
+      return
     }
     mutation.mutate(data)
   }

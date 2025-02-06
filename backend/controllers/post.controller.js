@@ -23,11 +23,7 @@ export const createPost = async (req, res) => {
       .json({ message: "No file uploaded or invalid file type" })
   }
 
-  // const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
-  //   req.file.filename
-  // }`
-
-  if (content.title === "" || content.desc === "" || content.content === "") {
+  if (!content.title && !content.desc && !content.value) {
     return res
       .status(400)
       .json({ success: false, message: "Please fill the form" })

@@ -17,6 +17,16 @@ export const createPost = async (req, res) => {
 
   const content = req.body
 
+  if (!req.file) {
+    return res
+      .status(400)
+      .json({ message: "No file uploaded or invalid file type" })
+  }
+
+  // const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
+  //   req.file.filename
+  // }`
+
   if (content.title === "" || content.desc === "" || content.content === "") {
     return res
       .status(400)
@@ -38,8 +48,18 @@ export const createPost = async (req, res) => {
     counter++
   }
 
+  console.log(req.body)
+
   //create post and parse to user id
-  const newPost = new Post({ user: userId, slug, ...content })
+  const newPost = new Post({
+    user: userId,
+    slug,
+    image: `http://localhost:3000/uploads/${req.file.filename}`,
+    content: req.body.value,
+    catagory: req.body.category,
+    desc: req.body.desc,
+    title: req.body.title,
+  })
   const post = await newPost.save()
   res.status(200).json({ post, message: "Created!" })
 }

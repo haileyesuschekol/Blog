@@ -10,8 +10,8 @@ const postSchema = new Schema(
     },
 
     image: {
-      fileName: { type: String, required: true },
-      imageUrl: { type: String, required: true },
+      type: String,
+      default: "",
     },
 
     title: {

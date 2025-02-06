@@ -21,6 +21,11 @@ const fetchUser = async () => {
 const WritePage = () => {
   const [value, setValue] = useState("")
   const [nullError, setNullError] = useState(false)
+  const [image, setImage] = useState(null)
+  const [title, setTitle] = useState("")
+  const [category, setCategory] = useState("")
+  const [desc, setDesc] = useState("")
+
   const navigate = useNavigate()
 
   const {
@@ -35,11 +40,10 @@ const WritePage = () => {
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      return axios.post(
-        `${import.meta.env.VITE_API_URL}/api/posts`,
-        newPost,
-        { withCredentials: true } // Include credentials (cookies)
-      )
+      return axios.post(`${import.meta.env.VITE_API_URL}/api/posts`, newPost, {
+        withCredentials: true, // Include credentials (cookies)
+        headers: { "Content-Type": "multipart/form-data" },
+      })
     },
 
     onError: (error) => {
@@ -68,22 +72,22 @@ const WritePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
+    const formData = new FormData()
 
-    const data = {
-      title: formData.get("title"),
-      category: formData.get("category"),
-      desc: formData.get("desc"),
-      content: value,
-    }
+    formData.append("title", title)
+    formData.append("des", desc)
+    formData.append("category", category)
+    formData.append("value", value)
+    // formData.append("data", JSON.stringify(postData))
+    formData.append("image", image)
 
-    if (!value || !data.title || !data.category || !data.desc) {
+    if (!value && !title && !desc) {
       setNullError(true)
       toast.error("Please enter your content!")
 
       return
     }
-    mutation.mutate(data)
+    mutation.mutate(formData)
   }
 
   if (!userData) {
@@ -94,15 +98,23 @@ const WritePage = () => {
     <div className=" h-[clac(100vh-64px)] md:[calc(100vh-80px)] flex flex-col gap-3">
       <h1 className="text-xl font-light">Create new Post</h1>
       <form className="flex flex-col gap-4 mb-3" onSubmit={handleSubmit}>
-        <button className="flex items-center justify-center gap-2 w-max p-2 bg-slate-50 shadow-md rounded-md text-sm text-gray-500">
-          <CiImageOn className="w-5 h-5" />
-          Add a cover image
-        </button>
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+          className="flex items-center justify-center gap-2 w-max p-2 bg-slate-50 shadow-md rounded-md text-sm text-gray-500"
+        />
+        <CiImageOn className="w-5 h-5" />
+        Add a cover image
+        {/* </input> */}
         <input
           type="text"
           className="text-3xl font-semibold bg-transparent outline-none"
           placeholder="Title"
           name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <div className="flex items-center gap-4 ">
           <label htmlFor="" className="tezt-sm ">
@@ -111,6 +123,8 @@ const WritePage = () => {
           <select
             name="category"
             id=""
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             className="p-2 bg-white shadow-md focus:outline-none"
           >
             <option value="general">General</option>
@@ -125,6 +139,8 @@ const WritePage = () => {
           name="desc"
           placeholder="Write a short description"
           className="p-2 rounded-xl bg-slate-50 shadow-md"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
         />
         <ReactQuill
           theme="snow"

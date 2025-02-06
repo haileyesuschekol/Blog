@@ -1,4 +1,6 @@
 import express from "express"
+import path from "path"
+import { fileURLToPath } from "url"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import connectToDb from "./lib/connectDb.js"
@@ -8,6 +10,11 @@ import commentRouter from "./routes/comment.route.js"
 import authRouter from "./routes/auth.route.js"
 
 const app = express()
+
+// Get the current directory path
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 app.use(cookieParser())
 app.use(
   cors({
@@ -18,6 +25,8 @@ app.use(
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // For parsing application/x-www-form-urlencoded
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))) // Serve static files (images)
 
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)

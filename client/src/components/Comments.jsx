@@ -2,6 +2,7 @@ import { toast } from "react-toastify"
 import axios from "axios"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import Comment from "./Comment"
+import { useState } from "react"
 
 const fetchComments = async (postId) => {
   const res = await axios.get(
@@ -14,6 +15,7 @@ const fetchComments = async (postId) => {
 }
 
 const Comments = ({ postId }) => {
+  const [desc, setDesc] = useState("")
   const { data: comments } = useQuery({
     queryKey: ["comments", postId],
     queryFn: () => fetchComments(postId),
@@ -39,15 +41,14 @@ const Comments = ({ postId }) => {
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["comments", postId] })
-      const message = response.data?.message || "Operation successful"
+      const message = response.data.message || "Comment added"
       toast.success(message)
+      setDesc("")
     },
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
-    const desc = formData.get("desc").trim()
 
     if (!desc) {
       return toast.error("Please add a comment")
@@ -65,6 +66,8 @@ const Comments = ({ postId }) => {
       >
         <textarea
           name="desc"
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
           placeholder="write a comment ..."
           className="w-full p-4 rounded-xl bg-gray-100"
         ></textarea>

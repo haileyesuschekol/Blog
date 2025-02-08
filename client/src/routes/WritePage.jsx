@@ -75,7 +75,7 @@ const WritePage = () => {
     const formData = new FormData()
 
     formData.append("title", title)
-    formData.append("des", desc)
+    formData.append("desc", desc)
     formData.append("category", category)
     formData.append("value", value)
     // formData.append("data", JSON.stringify(postData))

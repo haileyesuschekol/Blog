@@ -23,6 +23,11 @@ export const addComment = async (req, res) => {
       .json({ success: false, message: "Not authenticated!" })
   }
 
+  const isUserCommented = await Comment.find({ user: userId, post: postId })
+  if (isUserCommented) {
+    return res.status(400).json({ status: false, message: "Already Commented" })
+  }
+
   const newComment = new Comment({
     desc,
     user: user._id,

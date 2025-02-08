@@ -4,7 +4,7 @@ import { Schema } from "mongoose"
 const commentSchema = new Schema(
   {
     user: {
-      typr: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -23,4 +23,4 @@ const commentSchema = new Schema(
   { timestamps: true }
 )
 
-export default mongoose.model("Post", commentSchema)
+export default mongoose.model("Comment", commentSchema)

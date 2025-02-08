@@ -119,7 +119,7 @@ const SinglePostPage = () => {
           </div>
         </div>
       </div>
-      <Comments />
+      <Comments postId={singlePost?._id} />
     </div>
   )
 }

@@ -53,7 +53,7 @@ export const createPost = async (req, res) => {
   const newPost = new Post({
     user: userId,
     slug,
-    image: `http://localhost:3000/uploads/${req.file.filename}`,
+    image: `/uploads/${req.file.filename}`,
     content: req.body.value,
     catagory: req.body.category,
     desc: req.body.desc,

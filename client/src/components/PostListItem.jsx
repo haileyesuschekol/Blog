@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom"
 // import { format } from "timeago.js"
-import Image from "./Image"
 
 const PostListItem = ({ post }) => {
   return (
     <div className="flex flex-col xl:flex-row gap-8">
       {/* image */}
-      {post.image && (
+      {post?.image && (
         <div className="md:hidden xl:block xl:w-1/3">
-          <Image
-            src={post.image}
-            className="rounded-2xl object-cover"
-            w="735"
+          <img
+            src={`http://localhost:3000${post.image}`}
+            className="rounded-2xl object-cover w-full"
+            alt="Post"
           />
         </div>
       )}

@@ -98,15 +98,16 @@ const WritePage = () => {
     <div className=" h-[clac(100vh-64px)] md:[calc(100vh-80px)] flex flex-col gap-3">
       <h1 className="text-xl font-light">Create new Post</h1>
       <form className="flex flex-col gap-4 mb-3" onSubmit={handleSubmit}>
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="flex items-center justify-center gap-2 w-max p-2 bg-slate-50 shadow-md rounded-md text-sm text-gray-500"
-        />
-        <CiImageOn className="w-5 h-5" />
-        Add a cover image
+        <div className="flex flex-row justify-start items-center">
+          <CiImageOn className="w-10  h-10 text-green-500" />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            className=" ml-3  w-max p-2 bg-slate-50 shadow-md rounded-md text-sm text-gray-500"
+          />
+        </div>
         {/* </input> */}
         <input
           type="text"

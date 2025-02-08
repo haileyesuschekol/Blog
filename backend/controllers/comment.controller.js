@@ -14,7 +14,6 @@ export const addComment = async (req, res) => {
   const postId = req.params.postId
   console.log(req.body)
   const { desc } = req.body
-  //   const desc = "asdf"
   const user = await User.findOne({ userId })
 
   if (!user) {
@@ -62,5 +61,5 @@ export const deleteComment = async (req, res) => {
     })
   }
 
-  res.status(200).json("Comment deleted")
+  res.status(200).json({ success: true, message: "Comment deleted" })
 }

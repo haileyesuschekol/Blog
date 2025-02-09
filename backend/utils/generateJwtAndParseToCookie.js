@@ -9,7 +9,7 @@ export const generateJwtAndParseToCookie = (res, userId) => {
     httpOnly: true, // Prevent JavaScript access
     secure: process.env.NODE_ENV === "production", // Use HTTPS in production
     sameSite: "strict",
-    maxAge: 7 * 12 * 60 * 1000, //7days
+    maxAge: 7 * 24 * 60 * 60 * 1000, //7days
   })
 
   return token

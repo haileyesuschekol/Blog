@@ -33,5 +33,7 @@ export const savePost = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { $pull: { savedPost: postId } })
   }
 
-  res.status(200).json(isSaved ? "Post unsaved" : "Post saved")
+  res
+    .status(200)
+    .json({ message: `${isSaved} ? "Post unsaved" : "Post saved"` })
 }

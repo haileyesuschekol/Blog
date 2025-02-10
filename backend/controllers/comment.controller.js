@@ -12,9 +12,10 @@ export const addComment = async (req, res) => {
   //save userId form cookie
   const userId = req.userId
   const postId = req.params.postId
-  console.log(req.body)
+
+  console.log(req.body, "userId", userId, "postId", postId)
   const { desc } = req.body
-  const user = await User.findOne({ userId })
+  const user = await User.findOne({ _id: userId })
 
   if (!user) {
     return res
@@ -22,7 +23,10 @@ export const addComment = async (req, res) => {
       .json({ success: false, message: "Not authenticated!" })
   }
 
-  const isUserCommented = await Comment.find({ user: userId, post: postId })
+  const isUserCommented = await Comment.findOne({ user: userId, post: postId })
+
+  console.log(isUserCommented)
+
   if (isUserCommented) {
     return res.status(400).json({ status: false, message: "Already Commented" })
   }

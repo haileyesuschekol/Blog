@@ -4,10 +4,11 @@ import {
   deleteComment,
   getPostComments,
 } from "../controllers/comment.controller.js"
+import { isUserAuth } from "../middleware/auth.js"
 const router = express.Router()
 
-router.post("/:postId", addComment)
+router.post("/:postId", isUserAuth, addComment)
 router.get("/:postId", getPostComments)
-router.delete("/:id", deleteComment)
+router.delete("/:id", isUserAuth, deleteComment)
 
 export default router

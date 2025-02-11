@@ -1,8 +1,17 @@
+import { useQuery } from "@tanstack/react-query"
 import useUser from "../hook/useFetchUser"
+import axios from "axios"
 
 const PostMenuActions = ({ post }) => {
   const { data: userInfo } = useUser()
-  console.log(userInfo)
+  const { data: savedPost } = useQuery({
+    queryKey: ["savedPosts"],
+    queryFn: async () => {
+      return axios.get(`${import.meta.env.VITE_API_URL}/api/users/saved`)
+    },
+  })
+
+  const isSaved = savedPost?.data?.some((p) => p === post._id) || false
   return (
     <div className="">
       <h1 className=" mt-4 mb-2 text-sm font-medium">Actions</h1>
@@ -17,6 +26,7 @@ const PostMenuActions = ({ post }) => {
             d="M12 4C10.3 4 9 5.3 9 7v34l15-9 15 9V7c0-1.7-1.3-3-3-3H12z"
             stroke="black"
             strokeWidth="2"
+            fill={isSaved ? "black" : "none"}
           />
         </svg>
         <span>Save this post</span>

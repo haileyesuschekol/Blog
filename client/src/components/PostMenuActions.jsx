@@ -1,17 +1,47 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import useUser from "../hook/useFetchUser"
 import axios from "axios"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
 
 const PostMenuActions = ({ post }) => {
+  const navigate = useNavigate()
   const { data: userInfo } = useUser()
   const { data: savedPost } = useQuery({
     queryKey: ["savedPosts"],
     queryFn: async () => {
-      return axios.get(`${import.meta.env.VITE_API_URL}/api/users/saved`)
+      return axios.get(`${import.meta.env.VITE_API_URL}/api/users/saved`, {
+        withCredentials: true,
+      })
     },
   })
 
   const isSaved = savedPost?.data?.some((p) => p === post._id) || false
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      return axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/posts/${post._id}`,
+        { withCredentials: true }
+      )
+    },
+
+    onSuccess: (response) => {
+      const message = response?.data?.message || "Deleted Successfully"
+      toast.success(message)
+      navigate("/")
+    },
+
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+      toast.error(message)
+    },
+  })
+
+  const handleDelete = () => {
+    deleteMutation.mutate()
+  }
+
   return (
     <div className="">
       <h1 className=" mt-4 mb-2 text-sm font-medium">Actions</h1>
@@ -33,7 +63,10 @@ const PostMenuActions = ({ post }) => {
       </div>
 
       {userInfo?.user.name === post?.user.name && (
-        <div className="flex items-center gap-2 py-2 text-sm cursor-pointer">
+        <div
+          className="flex items-center gap-2 py-2 text-sm cursor-pointer"
+          onClick={handleDelete}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 50"

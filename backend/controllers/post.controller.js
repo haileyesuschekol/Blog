@@ -80,5 +80,5 @@ export const deletePost = async (req, res) => {
   if (!deletePost) {
     res.status(403).json("You can delete only your post!")
   }
-  res.status(200).json("Psot delete successfully")
+  res.status(200).json("Post delete successfully")
 }

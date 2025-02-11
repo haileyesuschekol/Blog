@@ -49,23 +49,11 @@ const WritePage = () => {
     onError: (error) => {
       const message = error.response?.data?.message || "Something went wrong"
 
-      toast.error(message, {
-        autoClose: 2000,
-        position: "top-right",
-        hideProgressBar: true,
-        pauseOnHover: false,
-        theme: "colored",
-      })
+      toast.error(message)
     },
     onSuccess: (response) => {
       const message = response.data?.message || "Operation successful"
-      toast.success(message, {
-        autoClose: 2000,
-        position: "top-right",
-        hideProgressBar: true,
-        pauseOnHover: false,
-        theme: "colored",
-      })
+      toast.success(message)
       navigate(`/${response.data.post.slug}`)
     },
   })

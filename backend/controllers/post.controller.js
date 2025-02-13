@@ -67,18 +67,22 @@ export const deletePost = async (req, res) => {
   //save userId form cookie
   const userId = req.userId
 
-  const user = User.findOne({ userId })
+  const user = await User.findOne({ _id: userId })
   if (!user) {
-    res.status(403).json({ success: false, message: "unauthenticated" })
+    return res.status(403).json({ success: false, message: "unauthenticated" })
   }
 
-  const deletePost = await Post.findByIdAndDelete({
-    _id: req.params.id,
-    user: userId,
-  })
-
-  if (!deletePost) {
-    res.status(403).json("You can delete only your post!")
+  if (user.role === "admin") {
+    await Post.findByIdAndDelete(req.params.id)
+    res.status(200).json({ success: true, message: "Post has been deleted!" })
   }
-  res.status(200).json("Post delete successfully")
+
+  const post = await Post.findById(req.params.id)
+  if (!post || post.user.toString() !== user._id.toString()) {
+    return res
+      .status(403)
+      .json({ success: false, message: "You can delete only your post!" })
+  }
+  await Post.findByIdAndDelete(req.params.id)
+  res.status(200).json({ success: true, message: "Post delete successfully" })
 }

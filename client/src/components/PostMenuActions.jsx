@@ -93,7 +93,8 @@ const PostMenuActions = ({ post }) => {
         <span>Save this post</span>
       </div>
 
-      {userInfo?.user.name === post?.user.name && (
+      {(userInfo?.user.name === post?.user.name ||
+        userInfo?.user.role === "admin") && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handleDelete}

@@ -16,7 +16,7 @@ const PostMenuActions = ({ post }) => {
     },
   })
 
-  const isSaved = savedPost?.data?.some((p) => p === post._id) || false
+  const isSaved = savedPost?.data?.some((p) => p === post?._id) || false
 
   const deleteMutation = useMutation({
     mutationFn: async () => {

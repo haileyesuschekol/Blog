@@ -77,12 +77,17 @@ export const deletePost = async (req, res) => {
     res.status(200).json({ success: true, message: "Post has been deleted!" })
   }
 
-  const post = await Post.findById(req.params.id)
-  if (!post || post.user.toString() !== user._id.toString()) {
-    return res
-      .status(403)
-      .json({ success: false, message: "You can delete only your post!" })
+  const deleted = await Post.findOneAndDelete({
+    _id: req.params.id,
+    user: user._id,
+  })
+
+  if (!deleted) {
+    res
+      .status(400)
+      .json({ success: false, message: "cant delete others post!" })
   }
+
   await Post.findByIdAndDelete(req.params.id)
   res.status(200).json({ success: true, message: "Post delete successfully" })
 }

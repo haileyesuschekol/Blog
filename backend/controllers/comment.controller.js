@@ -53,6 +53,13 @@ export const deleteComment = async (req, res) => {
 
   const user = await User.findOne({ userId })
 
+  if (user.role === "admin") {
+    await Comment.findByIdAndDelete(req.params.id)
+    return res
+      .status(200)
+      .json({ success: true, message: "Comment has been deleted!" })
+  }
+
   const deletedComment = await Comment.findOneAndDelete({
     _id: postId,
     user: user._id,

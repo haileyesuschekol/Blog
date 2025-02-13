@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import useUser from "../hook/useFetchUser"
 import axios from "axios"
 import { toast } from "react-toastify"
@@ -38,14 +38,45 @@ const PostMenuActions = ({ post }) => {
     },
   })
 
+  const queryClient = useQueryClient()
+
+  const saveMutation = useMutation({
+    mutationFn: async () => {
+      return axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/users/save`,
+        { postId: post._id },
+        { withCredentials: true }
+      )
+    },
+
+    onSuccess: (response) => {
+      const message = response?.data?.message || "Post saved successfully"
+      toast.success(message)
+      queryClient.invalidateQueries(["savedPosts"])
+    },
+
+    onError: (error) => {
+      const message = error.response?.data?.message || "Something went wrong"
+      toast.error(message)
+    },
+  })
+
   const handleDelete = () => {
     deleteMutation.mutate()
+  }
+
+  const handleSave = () => {
+    if (!userInfo) navigate("/login")
+    saveMutation.mutate()
   }
 
   return (
     <div className="">
       <h1 className=" mt-4 mb-2 text-sm font-medium">Actions</h1>
-      <div className="flex items-center gap-2 py-2 text-sm cursor-pointer">
+      <div
+        className="flex items-center gap-2 py-2 text-sm cursor-pointer"
+        onClick={handleSave}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 48 48"

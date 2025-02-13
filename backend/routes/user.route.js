@@ -6,6 +6,6 @@ import { isUserAuth } from "../middleware/auth.js"
 const router = express.Router()
 
 router.get("/saved", isUserAuth, getUserSavedPost)
-router.patch("/saved", isUserAuth, savePost)
+router.patch("/save", isUserAuth, savePost)
 
 export default router

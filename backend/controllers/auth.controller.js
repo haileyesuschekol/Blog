@@ -28,10 +28,15 @@ export const signup = async (req, res) => {
     //get verification code
     const verificationCode = generateVerificationCode()
 
+    const count = await User.countDocuments()
+    let role = undefined
+    count < 1 ? (role = "admin") : (role = "user")
+
     const user = new User({
       email,
       password: hashPassword,
       name,
+      role,
       verificationToken: verificationCode,
       verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, //24hr
     })

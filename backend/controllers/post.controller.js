@@ -93,3 +93,33 @@ export const deletePost = async (req, res) => {
   await Post.findByIdAndDelete(req.params.id)
   res.status(200).json({ success: true, message: "Post delete successfully" })
 }
+
+export const featurePost = async (req, res) => {
+  //save userId form cookie
+  const userId = req.userId
+  const { postId } = req.body
+
+  if (!userId) {
+    return res.status(403).json({ success: false, message: "unauthenticated" })
+  }
+
+  const user = await User.findOne({ _id: userId })
+  if (!user && user.role !== "admin") {
+    return res.status(403).json({ success: false, message: "unauthorized!" })
+  }
+
+  const post = await Post.findById(postId)
+
+  if (!post) {
+    return res.status(400).json({ success: false, message: "post not found!" })
+  }
+
+  const isFeatured = post.isFeatured
+
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    { isFeatured: !isFeatured },
+    { new: true }
+  )
+  return res.status(200).json(updatedPost)
+}

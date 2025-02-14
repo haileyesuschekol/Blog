@@ -43,15 +43,15 @@ export const addComment = async (req, res) => {
 export const deleteComment = async (req, res) => {
   //save userId form cookie
   const userId = req.userId
-  const postId = req.params.postId
+  const id = req.params.id
+
+  const user = await User.findOne({ _id: userId })
 
   if (!user) {
     return res
-      .status(404)
+      .status(403)
       .json({ success: false, message: "Not authenticated!" })
   }
-
-  const user = await User.findOne({ userId })
 
   if (user.role === "admin") {
     await Comment.findByIdAndDelete(req.params.id)
@@ -61,11 +61,11 @@ export const deleteComment = async (req, res) => {
   }
 
   const deletedComment = await Comment.findOneAndDelete({
-    _id: postId,
+    _id: id,
     user: user._id,
   })
 
-  if (!deleteComment) {
+  if (!deletedComment) {
     return res.json({
       success: false,
       message: "You can't delete others comment!",

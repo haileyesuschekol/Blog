@@ -76,7 +76,7 @@ const Comments = ({ postId }) => {
         </button>
       </form>
       {comments?.map((comment) => (
-        <Comment key={comment?._id} comment={comment} />
+        <Comment key={comment?._id} comment={comment} postId={postId} />
       ))}
     </div>
   )

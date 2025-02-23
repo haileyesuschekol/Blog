@@ -15,7 +15,7 @@ export const getPosts = async (req, res) => {
   }
 
   if (searchQuery) {
-    query.title = { $regex: searchQuery, $option: "i" }
+    query.title = { $regex: searchQuery, $options: "i" }
   }
 
   if (author) {
@@ -54,7 +54,7 @@ export const getPosts = async (req, res) => {
         break
     }
   }
-  console.log(query)
+
   const posts = await Post.find(query).populate("user", "name").sort(sortObj)
   res.status(200).json(posts)
 }

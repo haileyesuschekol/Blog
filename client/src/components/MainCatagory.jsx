@@ -1,5 +1,6 @@
 import { CiSearch } from "react-icons/ci"
 import { Link } from "react-router-dom"
+import Search from "./Search"
 
 const MainComponent = () => {
   return (
@@ -45,17 +46,7 @@ const MainComponent = () => {
       </div>
       <span className="text-xl font-medium">|</span>
       {/* search */}
-      <div className="flex justify-center rounded-full p-2 items-center gap-3">
-        <button>
-          {" "}
-          <CiSearch />
-        </button>
-        <input
-          type="text"
-          placeholder="search a post..."
-          className="bg-transparent  focus:outline-none "
-        />
-      </div>
+      <Search />
     </div>
   )
 }

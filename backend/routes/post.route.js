@@ -10,10 +10,11 @@ import {
 } from "../controllers/post.controller.js"
 import { isUserAuth } from "../middleware/auth.js"
 import { upload } from "../middleware/uploadImage.js"
+import { increaseVisit } from "../middleware/increaseVisit.js"
 const router = express.Router()
 
 router.get("/", getPosts)
-router.get("/:slug", getPost)
+router.get("/:slug", increaseVisit, getPost)
 router.post("/", isUserAuth, upload.single("image"), createPost)
 router.delete("/:id", isUserAuth, deletePost)
 router.patch("/feature", isUserAuth, featurePost)

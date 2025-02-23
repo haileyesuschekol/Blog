@@ -100,8 +100,6 @@ export const createPost = async (req, res) => {
     counter++
   }
 
-  console.log("req.body -- ", req.body)
-
   //create post and parse to user id
   const newPost = new Post({
     user: userId,
@@ -113,7 +111,6 @@ export const createPost = async (req, res) => {
     title: req.body.title,
   })
   const post = await newPost.save()
-  console.log("new psot --", newPost)
   res.status(200).json({ post, message: "Created!" })
 }
 

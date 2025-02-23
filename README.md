@@ -4,19 +4,19 @@ A blog platform where users can register, create, and manage content. The projec
 
 ## Screenshot
 
-#### Showcase Images Side by Side
+#### Home
 
 ![Alt Text](./screenshot/scr4.png)
 
-#### Showcase Images Side by Side
+#### All Posts
 
 ![Alt Text](./screenshot/scr2.png)
 
-#### Showcase Images Side by Side
+#### Single Post
 
 ![Alt Text](./screenshot/scr3.png)
 
-#### Showcase Images Side by Side
+#### Write content
 
 ![Alt Text](./screenshot/scr7.png)
 

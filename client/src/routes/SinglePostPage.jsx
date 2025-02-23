@@ -52,7 +52,10 @@ const SinglePostPage = () => {
       <div className=" flex flex-col md:flex-row gap-12">
         {/* text  */}
         <div className="lg:text-lg flex flex-col gap-6 text-justify">
-          {singlePost?.content}
+          <div
+            dangerouslySetInnerHTML={{ __html: `${singlePost?.content}` }}
+            className="border-gray-300 p-3"
+          />
         </div>
 
         {/* menu  */}

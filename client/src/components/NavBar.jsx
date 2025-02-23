@@ -82,11 +82,12 @@ const NavBar = () => {
       {/* desktop menu */}
       <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
         <Link to="/">Home</Link>
-        <Link to="/">Trending</Link>
-        <Link to="/">Most Popular</Link>
-        <Link to="/">About</Link>
+        <Link to="/posts">All posts</Link>
+        <Link to="/posts?sort=trending">Trending</Link>
+        <Link to="/posts?sort=newest">latest</Link>
+        <Link to="/posts?sort=popular">Most Popular</Link>
 
-        {userData ? (
+        {userData?.user?.isVerified ? (
           // <UserProfileImg name={userData?.user?.name} />
           <div
             className="flex flex-col relative items-center justify-center"

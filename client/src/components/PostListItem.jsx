@@ -16,7 +16,7 @@ const PostListItem = ({ post }) => {
       )}
       {/* details  */}
       <div className="flex flex-col gap-4 xl:w-2/3">
-        <Link to={post.slug} className="text-4xl font-semibold">
+        <Link to={`/${post.slug}`} className="text-4xl font-semibold">
           {post.title}
         </Link>
         <div className="flex items-center gap-2 text-gray-500 text-sm">
@@ -32,7 +32,7 @@ const PostListItem = ({ post }) => {
           <span>{post.createdAt}</span>
         </div>
         <p className="text-justify">{post.desc}</p>
-        <Link to="/" className="underline text-green-500 text-sm">
+        <Link to={`/${post.slug}`} className="underline text-green-500 text-sm">
           Read More
         </Link>
       </div>

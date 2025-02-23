@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/uploads": {
-        target: import.meta.env.VITE_API_URL,
+        target: "https://blog-816s.onrender.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/uploads/, "/uploads"), // Keep path same
       },

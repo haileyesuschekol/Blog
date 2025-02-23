@@ -117,7 +117,7 @@ const PostMenuActions = ({ post }) => {
         </svg>
         <span>Save this post</span>
       </div>
-      {userInfo.user.role === "admin" && (
+      {userInfo?.user.role === "admin" && (
         <div
           className="flex items-center gap-2 py-2 text-sm cursor-pointer"
           onClick={handlefeature}

@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/uploads": {
-        target: "http://localhost:3000",
+        target: import.meta.env.VITE_API_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/uploads/, "/uploads"), // Keep path same
       },

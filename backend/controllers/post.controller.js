@@ -2,7 +2,60 @@ import Post from "../models/post.model.js"
 import User from "../models/user.model.js"
 
 export const getPosts = async (req, res) => {
-  const posts = await Post.find().populate("user", "name")
+  const query = {}
+
+  const cat = req.query.cat
+  const author = req.query.author
+  const searchQuery = req.query.search
+  const sortQuery = req.query.sort
+  const featured = req.query.featured
+
+  if (cat) {
+    query.category = cat
+  }
+
+  if (searchQuery) {
+    query.title = { $regex: searchQuery, $option: "i" }
+  }
+
+  if (author) {
+    const user = await User.findOne({ name: author }).select("_id")
+    if (!user) {
+      return res.status(404).json({ success: false, message: "No post found!" })
+    }
+    query.user = user._id
+  }
+
+  if (cat) {
+    query.category = cat
+  }
+
+  let sortObj = { createdAt: -1 }
+
+  if (sortQuery) {
+    switch (sortQuery) {
+      case "newest":
+        sortObj = { createdAt: -1 }
+        break
+      case "oldest":
+        sortObj = { createdAt: 1 }
+        break
+      case "popular":
+        sortObj = { visit: -1 }
+        break
+      case "trending":
+        sortObj = { visit: -1 }
+        query.createdAt = {
+          $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
+        }
+        break
+
+      default:
+        break
+    }
+  }
+  console.log(query)
+  const posts = await Post.find(query).populate("user", "name").sort(sortObj)
   res.status(200).json(posts)
 }
 
@@ -47,7 +100,7 @@ export const createPost = async (req, res) => {
     counter++
   }
 
-  console.log(req.body)
+  console.log("req.body -- ", req.body)
 
   //create post and parse to user id
   const newPost = new Post({
@@ -55,11 +108,12 @@ export const createPost = async (req, res) => {
     slug,
     image: `/uploads/${req.file.filename}`,
     content: req.body.value,
-    catagory: req.body.category,
+    category: req.body.category,
     desc: req.body.desc,
     title: req.body.title,
   })
   const post = await newPost.save()
+  console.log("new psot --", newPost)
   res.status(200).json({ post, message: "Created!" })
 }
 

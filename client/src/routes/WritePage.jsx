@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { CiImageOn } from "react-icons/ci"
 import ReactQuill from "react-quill-new"
@@ -27,6 +27,7 @@ const WritePage = () => {
   const [desc, setDesc] = useState("")
 
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const {
     data: userData,
@@ -55,6 +56,7 @@ const WritePage = () => {
       const message = response.data?.message || "Operation successful"
       toast.success(message)
       navigate(`/${response.data.post.slug}`)
+      queryClient.invalidateQueries(["posts"])
     },
   })
 

@@ -5,10 +5,9 @@ import { useSearchParams } from "react-router-dom"
 
 const fetchPost = async (searchParams) => {
   const searchParamsObj = Object.fromEntries([...searchParams])
-  console.log(searchParamsObj)
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/posts`, {
     withCredentials: true,
-    params: { searchParamsObj },
+    params: { ...searchParamsObj },
   })
   return res.data
 }
@@ -16,7 +15,7 @@ const fetchPost = async (searchParams) => {
 const PostList = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { data: postData } = useQuery({
-    queryKey: ["posts"],
+    queryKey: ["posts", searchParams.toString()],
     queryFn: () => fetchPost(searchParams),
   })
   // const { data: postData } = usePosts()

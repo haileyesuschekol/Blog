@@ -11,6 +11,14 @@ const SideMenu = () => {
       })
     }
   }
+  const handleCategoryChange = (category) => {
+    if (searchParams.get("cat") !== category) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        cat: category,
+      })
+    }
+  }
 
   return (
     <div className="px-4 h-max sticky top-8">
@@ -65,34 +73,52 @@ const SideMenu = () => {
       <h1 className="mt-4 mb-3 text-sm font-medium">Catagories</h1>
       <div className="flex flex-col gap-2 text-sm">
         <div>
-          <Link className="underline" to="/posts">
+          <span
+            className="underline cursor-pointer"
+            onClick={() => handleCategoryChange("general")}
+          >
             All
-          </Link>
+          </span>
         </div>
         <div>
-          <Link className="underline" to="/posts?cat=web-design">
+          <span
+            className="underline  cursor-pointer "
+            onClick={() => handleCategoryChange("web-design")}
+          >
             Web Design
-          </Link>
+          </span>
         </div>
         <div>
-          <Link className="underline" to="/posts?cat=development">
+          <span
+            className="underline cursor-pointer "
+            onClick={() => handleCategoryChange("development")}
+          >
             Development
-          </Link>
+          </span>
         </div>
         <div>
-          <Link className="underline" to="/posts?cat=databases">
+          <span
+            className="underline cursor-pointer "
+            onClick={() => handleCategoryChange("database")}
+          >
             Database
-          </Link>
+          </span>
         </div>
         <div>
-          <Link className="underline" to="/posts?cat=seo">
+          <span
+            className="underline cursor-pointer "
+            onClick={() => handleCategoryChange("seo")}
+          >
             Search Engine
-          </Link>
+          </span>
         </div>
         <div>
-          <Link className="underline" to="/posts?cat=marketing">
+          <span
+            className="underline cursor-pointer "
+            onClick={() => handleCategoryChange("marketing")}
+          >
             Marketing
-          </Link>
+          </span>
         </div>
       </div>
     </div>

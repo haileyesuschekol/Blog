@@ -35,7 +35,10 @@ export const getPosts = async (req, res) => {
   if (sortQuery) {
     switch (sortQuery) {
       case "newest":
-        sortObj = { createdAt: -1 }
+        query.createdAt = {
+          $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+        }
+        sortObj = { createdAt: -1 } // Sort newest first
         break
       case "oldest":
         sortObj = { createdAt: 1 }

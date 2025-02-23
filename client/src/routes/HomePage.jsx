@@ -17,11 +17,12 @@ const HomePage = () => {
         {/* title*/}
         <div className="">
           <h2 className="text-gray-700 text-2xl md:text-5xl lg:text-5xl font-bold">
-            Lorem ipsum dolor sit.
+            Inspire Innovate Grow Connect Succeed.
           </h2>
           <p className="mt-8 text-md md:text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse fugit
-            voluptate eaque exercitationem minima labore!
+            Stay informed with the latest in technology and design.Learn, grow,
+            and transform your digital presence.Your go-to resource for
+            innovation and growth.
           </p>
         </div>
         {/* animated button */}

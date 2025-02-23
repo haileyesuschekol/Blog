@@ -132,7 +132,7 @@ const PostMenuActions = ({ post }) => {
               d="M24 2L29.39 16.26L44 18.18L33 29.24L35.82 44L24 37L12.18 44L15 29.24L4 18.18L18.61 16.26L24 2Z"
               stroke="black"
               strokeWidth="2"
-              fill={post.isFeatured ? "black" : "none"}
+              fill={post?.isFeatured ? "black" : "none"}
             />
           </svg>
           <span>Feature</span>

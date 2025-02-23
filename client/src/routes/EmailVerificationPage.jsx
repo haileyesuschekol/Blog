@@ -2,12 +2,15 @@ import { useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { motion } from "framer-motion"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
+import useUser from "../hook/useFetchUser"
 
 const EmailVerificationPage = () => {
+  const { data: user } = useUser()
   const [code, setCode] = useState("")
 
+  const useClient = useQueryClient()
   const navigate = useNavigate()
 
   const mutation = useMutation({
@@ -31,6 +34,7 @@ const EmailVerificationPage = () => {
     },
     onSuccess: (response) => {
       const message = response.data?.message || "Operation successful"
+      useClient.invalidateQueries(["user"])
       toast.success(message, {
         autoClose: 2000,
         position: "top-right",
@@ -85,6 +89,14 @@ const EmailVerificationPage = () => {
           </motion.button>
         </form>
       </motion.div>
+      <div>
+        <h3 className="text-center mt-4">
+          The free version of mailtrap send limited number of email, if
+          verificationToken is not sent, here is the code that sends to your
+          email address.
+        </h3>
+        <h2 className="text-center">{user?.user?.verificationToken}</h2>
+      </div>
     </div>
   )
 }

@@ -87,7 +87,7 @@ const NavBar = () => {
         <Link to="/posts?sort=newest">latest</Link>
         <Link to="/posts?sort=popular">Most Popular</Link>
 
-        {userData?.user?.isVerified ? (
+        {userData?.user.isVerified ? (
           // <UserProfileImg name={userData?.user?.name} />
           <div
             className="flex flex-col relative items-center justify-center"

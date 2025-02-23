@@ -6,6 +6,7 @@ import { client, sender } from "./mailtrap.config.js"
 
 export const sendVerificationEmail = async (email, verificationCode) => {
   const recipient = [{ email }]
+  // console.log(email, verificationCode)
 
   try {
     if (email) {

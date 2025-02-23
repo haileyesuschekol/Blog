@@ -8,7 +8,7 @@ const PostListItem = ({ post }) => {
       {post?.image && (
         <div className="md:hidden xl:block xl:w-1/3">
           <img
-            src={`http://localhost:3000${post.image}`}
+            src={`${post.image}`}
             className="rounded-2xl object-cover w-full"
             alt="Post"
           />

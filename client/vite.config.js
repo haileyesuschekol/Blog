@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/uploads": {
-        target: "https://blog-816s.onrender.com",
+        target: "http://localhost:3000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/uploads/, "/uploads"), // Keep path same
       },

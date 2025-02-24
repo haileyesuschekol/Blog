@@ -2,23 +2,11 @@
 
 A blog platform where users can register, create, and manage content. The project features user registration, authentication, content creation, and management, along with admin functionalities to manage users and posts.
 
-## Screenshot
+## Screenshots
 
-#### Home
+---
 
-![Alt Text](./screenshot/scr4.png)
-
-#### All Posts
-
-![Alt Text](./screenshot/scr2.png)
-
-#### Single Post
-
-![Alt Text](./screenshot/scr3.png)
-
-#### Write content
-
-![Alt Text](./screenshot/scr7.png)
+![Alt Text](./screenshot/blog-screenshot.png)
 
 ## Features
 

@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename)
 app.use(cookieParser())
 app.use(
   cors({
-    origin: process.env.CLIENT_URL, // frontend domain
+    origin: "https://blog-frontend-65kp.onrender.com", // frontend domain
     credentials: true, // Allow cookies
   })
 )

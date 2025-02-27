@@ -27,7 +27,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // For parsing application/x-www-form-urlencoded
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))) // Serve static files (images)
-
+app.use("/uploads", express.static("uploads"))
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
 app.use("/api/posts", postRouter)
